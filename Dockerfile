@@ -6,7 +6,7 @@ RUN apt-get install -y maven
 
 COPY . .
 
-RUN mvn clean package -DskipTests
+RUN mvn -Dmaven.wagon.http.retryHandler.count=5 clean package -DskipTests
 
 FROM openjdk:17-jdk-slim
 EXPOSE 8080

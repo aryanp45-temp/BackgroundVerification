@@ -34,4 +34,9 @@ public class AadharController {
         return ResponseEntity.ok(aadharService.verifyOtp(otpRequest.getAadharNumber(),otpRequest.getOtp()));
     }
 
+    @PostMapping("/generateOtp")
+    public ResponseEntity<?> generateOtp(@RequestBody AadharRequest aadharRequest ){
+        return ResponseEntity.ok(aadharService.generateOtp(aadharRequest.getAadharNumber()));
+    }
+
 }

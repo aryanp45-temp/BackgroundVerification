@@ -2,6 +2,7 @@ package com.aryan.BackgroundVerification.service;
 
 import com.aryan.BackgroundVerification.Repository.MockOtpRepository;
 import com.aryan.BackgroundVerification.Repository.PersonalDetailsRepository;
+import com.aryan.BackgroundVerification.dto.GeneratedOtp;
 import com.aryan.BackgroundVerification.dto.OtpErrorResponse;
 import com.aryan.BackgroundVerification.dto.OtpResponse;
 import com.aryan.BackgroundVerification.model.MockOtp;
@@ -48,6 +49,17 @@ public class AadharService {
         }
 
         return new OtpErrorResponse("Incorrect OTP !!");
-
     }
+
+    public Object generateOtp(String aadhar){
+        if (AadhaarValidator.isValidAadhaarNumber(aadhar) &&
+                personalDetailsRepository.existsById(aadhar)){
+            MockOtp mockOtp = mockOtpRepository.findById(aadhar).get();
+            return GeneratedOtp.builder()
+                    .otp(mockOtp.getOtp())
+                    .build();
+        }
+        return new OtpErrorResponse("Invalid Aaadhar Number !!");
+    }
+
 }
